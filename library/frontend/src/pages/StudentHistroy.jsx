@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -24,7 +25,7 @@ const StudentHistory = () => {
         setLoading(true);
         try {
             const res = await axios.get(
-                `http://127.0.0.1:8000/api/admin/student-history/${studentId}/`
+                API_URL + `admin/student-history/${studentId}/`
             );
             setStudent(res.data.student);
             setIssues(res.data.issues);

@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -24,7 +25,7 @@ const AddAuthor = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/authors/"
+                API_URL + "authors/"
             );
 
             setAuthors(res.data);
@@ -46,7 +47,7 @@ const AddAuthor = () => {
         try {
 
             const res = await axios.post(
-                "http://127.0.0.1:8000/api/authors/add/",
+                API_URL + "authors/add/",
                 { name }
             );
 

@@ -1,3 +1,4 @@
+import { API_ORIGIN, API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -29,7 +30,7 @@ const StudentBooks = () => {
                 setLoading(true);
 
                 const res = await axios.get(
-                    "http://127.0.0.1:8000/api/user_books/"
+                    API_URL + "user_books/"
                 );
 
                 setBooks(res.data);
@@ -83,7 +84,7 @@ const StudentBooks = () => {
             return book.cover_image;
         }
 
-        return `http://127.0.0.1:8000${book.cover_image}`;
+        return `${API_ORIGIN}${book.cover_image}`;
     };
 
     return (

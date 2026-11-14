@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -32,7 +33,7 @@ const AdminDashboard = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/admin/stats/"
+                API_URL + "admin/stats/"
             );
 
             setStats(res.data);

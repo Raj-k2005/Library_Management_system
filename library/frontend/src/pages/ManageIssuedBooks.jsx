@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -31,7 +32,7 @@ const ManageIssuedBooks = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/admin/issued-books/"
+                API_URL + "admin/issued-books/"
             );
 
             setIssues(res.data);

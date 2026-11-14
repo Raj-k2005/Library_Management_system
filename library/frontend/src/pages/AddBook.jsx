@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -44,8 +45,8 @@ const AddBook = () => {
         try {
 
             const [authRes, catRes] = await Promise.all([
-                axios.get("http://127.0.0.1:8000/api/authors/"),
-                axios.get("http://127.0.0.1:8000/api/categories/")
+                axios.get(API_URL + "authors/"),
+                axios.get(API_URL + "categories/")
             ]);
 
             const activeCats = (catRes.data).filter((c) => c.is_active);
@@ -88,7 +89,7 @@ const AddBook = () => {
         try {
 
             const res = await axios.post(
-                "http://127.0.0.1:8000/api/books/add/",
+                API_URL + "books/add/",
                 formdata,
                 {
                     headers: {

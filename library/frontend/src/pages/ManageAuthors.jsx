@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -31,7 +32,7 @@ const ManageAuthors = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/authors/"
+                API_URL + "authors/"
             );
 
             setAuthors(res.data);
@@ -67,7 +68,7 @@ const ManageAuthors = () => {
         try {
 
             const res = await axios.put(
-                `http://127.0.0.1:8000/api/update_author/${editId}/`,
+                API_URL + `update_author/${editId}/`,
                 { name: editName }
             );
 
@@ -102,7 +103,7 @@ const ManageAuthors = () => {
         try {
 
             const res = await axios.delete(
-                `http://127.0.0.1:8000/api/delete_author/${id}/`
+                API_URL + `delete_author/${id}/`
             );
 
             if (res.data.success) {

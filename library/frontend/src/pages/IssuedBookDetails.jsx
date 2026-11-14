@@ -1,3 +1,4 @@
+import { API_ORIGIN, API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -32,7 +33,7 @@ const IssuedBookDetails = () => {
         try {
 
             const res = await axios.get(
-                `http://127.0.0.1:8000/api/issued-books/${id}/`
+                API_URL + `issued-books/${id}/`
             );
 
             setIssue(res.data);
@@ -67,7 +68,7 @@ const IssuedBookDetails = () => {
         try {
 
             await axios.post(
-                `http://127.0.0.1:8000/api/return_book/${id}/`,
+                API_URL + `return_book/${id}/`,
                 { fine: fine }
             );
 
@@ -93,7 +94,7 @@ const IssuedBookDetails = () => {
     const bookCoverUrl = issue?.book_cover
         ? issue.book_cover.startsWith('http')
             ? issue.book_cover
-            : `http://127.0.0.1:8000${issue.book_cover}`
+            : `${API_ORIGIN}${issue.book_cover}`
         : null;
 
     if (loading) {

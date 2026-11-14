@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -39,7 +40,7 @@ const UserSignup = () => {
 
         try {
             const res = await axios.post(
-                "http://127.0.0.1:8000/api/user_signup/",
+                API_URL + "user_signup/",
                 formData
             );
 

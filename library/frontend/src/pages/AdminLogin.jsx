@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -19,7 +20,7 @@ const AdminLogin = () => {
         try {
 
             const res = await axios.post(
-                "http://127.0.0.1:8000/api/admin/login/",
+                API_URL + "admin/login/",
                 {
                     username,
                     password

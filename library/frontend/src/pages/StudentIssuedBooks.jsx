@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -29,7 +30,7 @@ const StudentIssuedBooks = () => {
         setLoading(true);
 
         const res = await axios.get(
-          "http://127.0.0.1:8000/api/user_issued_books/",
+          API_URL + "user_issued_books/",
           { params: { student_id: studentUser.student_id } }
         );
 

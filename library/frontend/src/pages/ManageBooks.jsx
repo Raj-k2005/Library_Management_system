@@ -1,3 +1,4 @@
+import { API_ORIGIN, API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -45,9 +46,9 @@ const ManageBooks = () => {
         try {
 
             const [booksRes, categoriesRes, authorsRes] = await Promise.all([
-                axios.get('http://127.0.0.1:8000/api/books/'),
-                axios.get('http://127.0.0.1:8000/api/categories/'),
-                axios.get('http://127.0.0.1:8000/api/authors/')
+                axios.get(API_URL + 'books/'),
+                axios.get(API_URL + 'categories/'),
+                axios.get(API_URL + 'authors/')
             ]);
 
             setBooks(booksRes.data);
@@ -77,7 +78,7 @@ const ManageBooks = () => {
         setEditQuantity(book.quantity);
 
         setEditImagePreview(
-            `http://127.0.0.1:8000${book.cover_image}`
+            `${API_ORIGIN}${book.cover_image}`
         );
 
         setEditImageFile(null);
@@ -127,7 +128,7 @@ const ManageBooks = () => {
             }
 
             const res = await axios.put(
-                `http://127.0.0.1:8000/api/update_book/${editId}/`,
+                API_URL + `update_book/${editId}/`,
                 formData,
                 {
                     headers: {
@@ -169,7 +170,7 @@ const ManageBooks = () => {
         try {
 
             const res = await axios.delete(
-                `http://127.0.0.1:8000/api/delete_book/${id}/`
+                API_URL + `delete_book/${id}/`
             );
 
             if (res.data.success) {
@@ -663,7 +664,7 @@ const ManageBooks = () => {
                                                                 <div className='d-flex gap-3 align-items-center'>
 
                                                                     <img
-                                                                        src={`http://127.0.0.1:8000${book.cover_image}`}
+                                                                        src={`${API_ORIGIN}${book.cover_image}`}
                                                                         alt={book.title}
                                                                         className='book-image'
                                                                     />

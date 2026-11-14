@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -43,7 +44,7 @@ const StudentChangePassword = () => {
       setSaving(true);
 
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/student/change_password/",
+        API_URL + "student/change_password/",
         {
           student_id: studentUser.student_id,
           current_password: form.current_password,

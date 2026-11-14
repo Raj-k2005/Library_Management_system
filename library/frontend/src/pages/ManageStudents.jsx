@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -31,7 +32,7 @@ const ManageStudents = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/admin/students/"
+                API_URL + "admin/students/"
             );
 
             setStudents(res.data);
@@ -55,8 +56,8 @@ const ManageStudents = () => {
         const isCurrentlyActive = student.is_active;
 
         const url = isCurrentlyActive
-            ? `http://127.0.0.1:8000/api/admin/block_students/${student.id}/`
-            : `http://127.0.0.1:8000/api/admin/activate_students/${student.id}/`;
+            ? API_URL + `admin/block_students/${student.id}/`
+            : API_URL + `admin/activate_students/${student.id}/`;
 
         const confirmMessage = isCurrentlyActive
             ? `You sure want to block ${student.full_name}?`

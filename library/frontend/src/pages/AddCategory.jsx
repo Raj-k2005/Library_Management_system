@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -31,7 +32,7 @@ const AddCategory = () => {
         try {
 
             const res = await axios.get(
-                "http://127.0.0.1:8000/api/categories/"
+                API_URL + "categories/"
             );
 
             setCategories(res.data);
@@ -55,7 +56,7 @@ const AddCategory = () => {
         try {
 
             const res = await axios.post(
-                "http://127.0.0.1:8000/api/categories/add/",
+                API_URL + "categories/add/",
                 { name, status }
             );
 

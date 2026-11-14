@@ -53,23 +53,30 @@ RENDER_HOST = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOST:
     ALLOWED_HOSTS.append(RENDER_HOST)
 
-CORS_ALLOWED_ORIGINS=[
+
+CORS_ALLOWED_ORIGINS = [
+    # Local development
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
+    "http://127.0.0.1:5173",
+
+    # Production frontend
+    "https://frontend.vercel.app",
 ]
 
-CSRF_TRUSTED_ORIGINS=[
+
+CSRF_TRUSTED_ORIGINS = [
+    # Local development
     "http://localhost:5173",
     "http://localhost:5174",
-
     "http://localhost:5175",
-]
+    "http://127.0.0.1:5174",
+    "http://127.0.0.1:5175",
 
-# Also allow 127.0.0.1 origin for local dev (vite may use 127.0.0.1)
-CORS_ALLOWED_ORIGINS += ["http://127.0.0.1:5173"]
-CSRF_TRUSTED_ORIGINS += ["http://127.0.0.1:5174"]
-CSRF_TRUSTED_ORIGINS += ["http://127.0.0.1:5175"]
+    # Production frontend
+    "https://frontend.vercel.app",
+]
 
 
 
