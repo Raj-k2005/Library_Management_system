@@ -12,7 +12,7 @@ import ManageAuthors from './pages/ManageAuthors';
 import AddBook from './pages/AddBook';
 import ManageBooks from './pages/ManageBooks';
 import AdminChangePassword from './pages/AdminChangePassword';
-import UserSignup from './pages/UserSignup';
+import UserSignup from './pages/UserSignUp';
 import UserLogin from './pages/UserLogin';
 import StudentDashboard from './pages/StudentDashboard';
 import StudentBooks from './pages/StudentBooks';
