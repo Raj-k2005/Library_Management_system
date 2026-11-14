@@ -22,6 +22,7 @@ def admin_login_api(request):
     username = request.data.get("username")
     password = request.data.get("password")
     user = authenticate(username=username, password=password)
+
     if user is not None and user.is_staff:
         return Response(
             {
@@ -33,13 +34,9 @@ def admin_login_api(request):
         )
 
     return Response(
-        {
-            "success": False,
-            "message": "Invalid username or password"
-        },
+        {"success": False, "message": "Invalid username or password"},
         status=401
     )
-
 
 
 @api_view(["POST"])

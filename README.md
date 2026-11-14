@@ -42,7 +42,7 @@ venv\Scripts\Activate
 3. Install backend dependencies:
 
 ```powershell
-pip install django djangorestframework
+pip install -r requirements.txt
 ```
 
 4. Apply migrations:
@@ -86,6 +86,7 @@ npm run dev
 
 - The React app currently expects the backend API to run at `http://127.0.0.1:8000`.
 - The SQLite file `library/backend/db.sqlite3` stores development data; keep it if you want to preserve test data.
+- Set the `SECRET_KEY` environment variable when deploying the backend.
 - If the app opens to a blank page, the route for `/` must render a valid landing component in `frontend/src/App.jsx`.
 
 ## Common commands

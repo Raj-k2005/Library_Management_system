@@ -9,6 +9,11 @@ const Header = () => {
 
   const navigate = useNavigate()
 
+  // Ensure only one role's header is visible at a time.
+  // Prefer admin if both tokens exist; otherwise show the single role present.
+  const isAdmin = !!adminUser;
+  const isStudent = !!studentUser && !isAdmin;
+
   const handleLogout = () => {
     localStorage.removeItem("adminUser");
     navigate('/admin/login')
@@ -193,7 +198,7 @@ const Header = () => {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 gap-2 align-items-center">
 
               {/* ── Guest links ── */}
-              {!adminUser && !studentUser && (
+              {!isAdmin && !isStudent && (
                 <>
                   <li className="nav-item">
                     <Link className={`nav-link glass-nav-link ${isActive("/")}`} to="/">
@@ -219,7 +224,7 @@ const Header = () => {
               )}
 
               {/* ── Admin links ── */}
-              {adminUser && (
+              {isAdmin && (
                 <>
                   <li className="nav-item">
                     <Link className={`nav-link glass-nav-link ${isActive("/admin/dashboard")}`} to="/admin/dashboard">
@@ -310,7 +315,7 @@ const Header = () => {
               )}
 
               {/* ── Student links ── */}
-              {studentUser && (
+              {isStudent && (
                 <>
                   <li className="nav-item">
                     <Link className={`nav-link glass-nav-link ${isActive('/user/dashboard')}`} to="/user/dashboard">
