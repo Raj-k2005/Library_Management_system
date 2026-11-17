@@ -1,5 +1,10 @@
 from django.contrib.auth import authenticate
-from rest_framework.decorators import api_view
+from django.conf import settings
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from .models import *
@@ -13,6 +18,7 @@ from django.contrib.auth.hashers import  make_password
 from django.contrib.auth.hashers import check_password
 from django.db.models import Q
 from django.utils import timezone
+import secrets
 
 
 
@@ -36,6 +42,81 @@ def admin_login_api(request):
     return Response(
         {"success": False, "message": "Invalid username or password"},
         status=401
+    )
+
+
+@api_view(["POST"])
+@authentication_classes([])
+@permission_classes([AllowAny])
+def admin_recover(request):
+    recovery_token = settings.ADMIN_RECOVERY_TOKEN
+    if len(recovery_token) < 32:
+        return Response({"success": False, "message": "Not found"}, status=404)
+
+    scheme, separator, supplied_token = request.headers.get("Authorization", "").partition(" ")
+    if (
+        scheme.lower() != "bearer"
+        or not separator
+        or not secrets.compare_digest(supplied_token, recovery_token)
+    ):
+        return Response(
+            {"success": False, "message": "Invalid recovery token"},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    if not isinstance(request.data, dict):
+        return Response(
+            {"success": False, "message": "Expected a JSON object"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    username = request.data.get("username")
+    password = request.data.get("password")
+    if not isinstance(username, str) or not isinstance(password, str):
+        return Response(
+            {"success": False, "message": "Username and password are required"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    try:
+        username = User._meta.get_field("username").clean(username.strip(), None)
+    except ValidationError as error:
+        return Response(
+            {"success": False, "message": error.messages},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
+    with transaction.atomic():
+        user = User.objects.select_for_update().filter(username=username).first()
+        if user is not None and not user.is_staff:
+            return Response(
+                {
+                    "success": False,
+                    "message": "That username belongs to a non-admin account",
+                },
+                status=status.HTTP_409_CONFLICT,
+            )
+
+        created = user is None
+        if created:
+            user = User(username=username)
+
+        try:
+            validate_password(password, user=user)
+        except ValidationError as error:
+            return Response(
+                {"success": False, "message": error.messages},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user.is_staff = True
+        user.is_superuser = True
+        user.set_password(password)
+        user.save()
+
+    return Response(
+        {"success": True, "username": user.username, "created": created},
+        status=status.HTTP_200_OK,
     )
 
 

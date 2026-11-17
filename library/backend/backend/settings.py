@@ -29,6 +29,8 @@ if not SECRET_KEY:
         raise ImproperlyConfigured("Set the SECRET_KEY environment variable for deployment.")
     SECRET_KEY = "django-insecure-local-development-only"
 
+ADMIN_RECOVERY_TOKEN = os.environ.get("ADMIN_RECOVERY_TOKEN", "")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("RENDER") is None
 

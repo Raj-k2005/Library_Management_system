@@ -4,6 +4,7 @@ from .views import *
 
 urlpatterns = [
    path("api/admin/login/",admin_login_api),
+   path("api/admin/recover/",admin_recover),
    path('api/categories/add/',add_category),
    path('api/categories/',list_categories),
    path('api/update_category/<int:id>/',update_category),

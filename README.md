@@ -127,6 +127,23 @@ npm run build
 - Create a `requirements.txt` for backend dependencies
 - Configure a frontend environment variable for the API base URL
 
+## Admin credential recovery without Render Shell
+
+The admin recovery endpoint is disabled unless `ADMIN_RECOVERY_TOKEN` is configured.
+To recover access without Render Shell:
+
+1. Deploy the backend code, then set `ADMIN_RECOVERY_TOKEN` in the Render service's
+   Environment settings to a randomly generated secret of at least 32 characters.
+2. Send a `POST` request over HTTPS to `/api/admin/recover/` with an
+   `Authorization: Bearer <token>` header and a JSON body containing the new
+   `username` and `password`. It creates a staff superuser, or resets the password
+   if that username already belongs to a staff user. It will not promote a regular
+   user.
+3. Remove `ADMIN_RECOVERY_TOKEN` from Render immediately after the request
+   succeeds. The endpoint returns 404 when the token is unset.
+
+The password is stored as a Django hash; never commit it or the recovery token.
+
 ## Project structure
 
 - `library/backend/` - Django backend project
