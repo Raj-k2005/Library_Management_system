@@ -63,6 +63,7 @@ CORS_ALLOWED_ORIGINS = [
 
     # Production frontend
     "https://frontend.vercel.app",
+    "https://library-management-system-embarko.embarko.app",
 ]
 
 
@@ -76,6 +77,7 @@ CSRF_TRUSTED_ORIGINS = [
 
     # Production frontend
     "https://frontend.vercel.app",
+    "https://library-management-system-embarko.embarko.app",
 ]
 
 
